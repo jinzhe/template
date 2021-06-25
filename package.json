@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@zee.kim/template",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An easy template engine for JavaScript.",
   "main": "./dist/template.min.js",
   "module": "./dist/template.esm.js",
