@@ -2,10 +2,8 @@ interface DirectiveArrayItem {
   name: string;
   options: any;
 }
-
-const directiveMap: { [key: string]: Function } = {}; //放指令
+const directiveMap: { [key: string]: Function } = {};
 const directiveArray: DirectiveArrayItem[] = [];
-
 function directive(name: string, fn: Function): void {
   directiveMap[name] = fn();
   directiveArray.push({
@@ -13,20 +11,11 @@ function directive(name: string, fn: Function): void {
     options: directiveMap[name],
   });
 }
-
 function getType(value: any) {
   return Object.prototype.toString
     .call(value)
     .toLowerCase()
     .slice(8, -1);
-}
-
-function nodesToArray(nodes: NodeListOf<ChildNode>) {
-  const arr = [];
-  for (let i = 0; i < nodes.length; i++) {
-    arr.push(nodes[i]);
-  }
-  return arr;
 }
 function compile(element: Element, scope: any): void {
   if (element.nodeType === 3) {
@@ -42,7 +31,6 @@ function compile(element: Element, scope: any): void {
       },
     );
   }
-  // 属性
   if (element.attributes) {
     directiveArray.map((directive) => {
       if (element.getAttribute(directive.name) && element.parentNode) {
@@ -50,10 +38,9 @@ function compile(element: Element, scope: any): void {
       }
     });
   }
-  // 发现有子节点，继续编译
-  nodesToArray(element.childNodes).map((child: any) => {
-    compile(child, scope);
-  });
+  for(let child of element.childNodes){
+    compile(child as HTMLElement, scope);
+  }
 }
 
 function value(data: any, attributes: string): any {
@@ -169,20 +156,16 @@ function Template(content: string, data: any): string {
           return;
         }
 
-        // 这里要处理一下
         const forTarget = value(scope, valueName) || [];
         const forFunc = (i: string | number) => {
           const itemNode = element.cloneNode(true) as HTMLElement;
-          // 这里创建一个新的scope
           const itemScope: { [key: string]: any } = {};
           itemScope[trackName] = i;
           itemScope[itemName] = forTarget[i];
           itemScope.__proto__ = scope;
           element.parentNode.insertBefore(itemNode, element);
-          // 这里是新加的dom, 要单独编译
           compile(itemNode, itemScope);
         };
-        // 提前移除当前节点指令，否则Node端会重复渲染
         element.removeAttribute('for');
         const type = getType(forTarget);
         if (type == 'array') {
@@ -225,9 +208,9 @@ function Template(content: string, data: any): string {
   });
   const div: HTMLElement = document.createElement('div');
   div.innerHTML = content;
-  nodesToArray(div.childNodes).map((child: any) => {
-    compile(child, data);
-  });
+  for(let child of div.childNodes){
+    compile(child as HTMLElement, data);
+  }
   return div.innerHTML;
 }
 export default Template;
