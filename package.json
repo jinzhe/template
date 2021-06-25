@@ -1,12 +1,14 @@
 {
   "private": false,
   "name": "@zee.kim/template",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An easy template engine for JavaScript.",
   "main": "./dist/template.min.js",
   "module": "./dist/template.esm.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
+  "keywords": [ "template" ],
+  "author": "zee.kim",
   "files": [
     "dist"
   ],

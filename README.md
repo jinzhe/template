@@ -4,9 +4,19 @@ An easy template engine for JavaScript.
 
 ## How to use?
 
+```
+npm i @zee.kim/template
+```
+or
+
+```html
 <script src="dist/template.min.js"></script>
+```
+
 
 ```js
+import Template from '@zee.kim/template';
+
 const data={
     html: "<marquee style='width:100px'>我是一条鱼</marquee>",
     text: "<b>我是纯文本</b>",
