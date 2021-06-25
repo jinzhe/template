@@ -4,7 +4,7 @@ An easy template engine for JavaScript.
 
 ## How to use?
 
-import 
+<script src="dist/template.min.js"></script>
 
 ```js
 const data={
