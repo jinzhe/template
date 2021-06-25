@@ -160,6 +160,5 @@ sketch
 .history
 
 storybook-static
-dist
 yarn.lock
 # End of https://www.gitignore.io/api/git,node,react,macos,visualstudiocode
